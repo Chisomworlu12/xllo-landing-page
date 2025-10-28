@@ -18,7 +18,7 @@ html,
 body {
   overflow-x: hidden;
   width: 100%;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 section,
@@ -31,7 +31,7 @@ header {
 .header {
   display: flex;
   flex-direction: column;
-  min-height: 60vh;
+  min-height: 30vh;
   margin: 0;
   width: 100%;
 }
@@ -53,7 +53,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 60px;
   width: 100%;
 }
 
@@ -111,10 +111,10 @@ hidden {
 }
 .header-title h1 {
   margin: 10px 0 0 0;
-  font-size: 40px;
+  font-size: 25px;
 }
 .header-title p {
-  font-size: 25px;
+  font-size: 20px;
 }
 .header-device {
   display: flex;
@@ -130,6 +130,7 @@ hidden {
 }
 .header_text {
   text-align: center;
+  font-weight: 300;
 }
 .header-title button {
   width: 200px;
@@ -138,7 +139,8 @@ hidden {
   border: none;
   background-color: var(--orange);
   box-shadow: #5a555a;
-  font-size: 18px;
+  font-size: 15px;
+  font-weight: 400;
 }
 /* header img */
 .header--img {
@@ -146,16 +148,18 @@ hidden {
   justify-content: center;
   align-items: center;
   background: var(--bg-gradient);
+  /* height: 500px; */
 }
 
 /* features */
 .features {
   display: flex;
   flex-direction: column;
-  padding: var(--edge-space);
+
   margin: 40px 0;
 }
 .feature_imp {
+  padding: var(--edge-space);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -180,22 +184,22 @@ hidden {
   position: relative;
 }
 .feature_imp_users_img img {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
 }
 .feature_imp_users_img img:nth-child(2) {
-  margin-left: -30px;
+  margin-left: -20px;
   z-index: 2;
 }
 .feature_imp_users_img img:nth-child(3) {
-  margin-left: -30px;
+  margin-left: -20px;
   z-index: 3;
 }
 .feature_imp_users p,
 .feature_imp_users span {
   font-size: 25px;
-  font-weight: 500;
+  font-weight: 400;
 }
 .feature_imp_users span {
   color: var(--orange);
