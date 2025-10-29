@@ -331,9 +331,14 @@
         <h2>STAY UPDATED WITH US</h2>
         <p>Don't miss out the opportunity to stay ahead of the curve</p>
 
-        <form class="form">
-          <input type="text" placeholder="Enter your email" />
-          <button class="btn_submit">Submit</button>
+        <form onsubmit="()=> e.preventDefault()">
+          <div class="form">
+            <input type="text" placeholder="Enter your email" id="email" />
+            <button class="btn_submit">Submit</button>
+          </div>
+
+          <p class="invalid hidden">Please enter a valid email address</p>
+          <p class="valid hidden">Thank you for subscribing!</p>
         </form>
       </div>
     </section>
