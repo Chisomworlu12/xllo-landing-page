@@ -61,3 +61,7 @@ closeMenu.addEventListener("click", closeMobileMenu);
 shopNow.addEventListener("click", function (e) {
   productSec.scrollIntoView({ behavior: "smooth" });
 });
+
+window.addEventListener("scroll", function () {
+  if (navLinks.classList.contains("active")) closeMenu.click();
+});
