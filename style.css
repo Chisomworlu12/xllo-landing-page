@@ -333,6 +333,7 @@ hidden {
 .form input {
   outline: none;
   border: none;
+  width: 150px;
 }
 .form input::placeholder {
   font-size: 15px;
@@ -400,6 +401,10 @@ footer {
   }
   .cart_img {
     width: 400px;
+  }
+  /* form */
+  .form input {
+    width: 200px;
   }
   /* footer */
   footer {
