@@ -23,10 +23,6 @@ body {
   background-color: var(--bg-color);
 }
 
-body.menu-open {
-  overflow: hidden;
-}
-
 section,
 header {
   border-bottom: 2px solid #e0e0e0;
@@ -110,16 +106,18 @@ header {
   padding: 20px;
   position: absolute;
   left: 0;
-  top: 0;
+  top: -50px;
   width: 100%;
   background: var(--bg-color);
-  transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-out;
   transform: translatey(50%);
 }
 .nav__links.active {
   display: flex;
 }
-
+.item_active {
+  padding-top: 30px;
+}
 .nav__item {
   margin-left: 60px;
 }
@@ -434,10 +432,14 @@ footer {
 
     list-style: none;
     color: var(--black);
-    display: flex;
+    transform: none;
+    top: auto;
     position: static;
     width: auto;
     padding: 0;
+  }
+  .item_active {
+    padding-top: 0;
   }
 
   .phone_menu {

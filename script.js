@@ -44,7 +44,7 @@ const closeMobileMenu = function () {
   navLinks.classList.remove("active");
   body.classList.remove("menu-open");
   document.documentElement.classList.remove("menu-open");
-  handleHover.bind(1);
+  handleHover(1);
 };
 // phone open
 openMenu.addEventListener("click", function () {
@@ -60,8 +60,4 @@ closeMenu.addEventListener("click", closeMobileMenu);
 // shop now smooth scroll button
 shopNow.addEventListener("click", function (e) {
   productSec.scrollIntoView({ behavior: "smooth" });
-});
-
-window.addEventListener("scroll", function () {
-  if (navLinks.classList.contains("active")) closeMenu.click();
 });
