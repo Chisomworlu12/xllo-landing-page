@@ -155,7 +155,7 @@ window.addEventListener("DOMContentLoaded", () => {
         </div>
 
         <!-- price -->
-        <span class="cart_price">$${item.price}</span>
+        <span class="cart_price">$${item.price.toFixed(2)}</span>
         
         <div class="btn_addc" data-index=${item.id}>
           <button class="btn_cart" >
@@ -233,7 +233,7 @@ window.addEventListener("DOMContentLoaded", () => {
           <img src=${item.image}  class="add_img"/>
           <div>${item.name}</div>
           <div class="added_quantity_price">
-          <span>$${item.price * item.quantity}</span>
+          <span>$${(item.price * item.quantity).toFixed(2)}</span>
           <span>Items: ${item.quantity}</span>
           </div>
         </div>
