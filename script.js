@@ -2,7 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Prouct data
   const products = [
     {
-      id: 1,
+      id: 0,
       name: "MELLO DREAM 725i",
       price: 50,
       image: "./img/cart-img/cart1.png",
@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
         "Experience crystal-clear sound with deep bass and noise cancellation—perfect for music, calls, and gaming.",
     },
     {
-      id: 2,
+      id: 1,
       name: "XELLO WH-1000XM6",
       price: 20,
       image: "./img/cart-img/cart2.png",
@@ -28,12 +28,18 @@ window.addEventListener("DOMContentLoaded", () => {
   const closeMenu = document.getElementById("close");
   const navLinks = document.querySelector(".nav__links");
   const nav = document.querySelector(".nav");
-  const emailSubBtn = document.querySelector(".btn_submit");
+
   const email = document.getElementById("email");
 
   const emailMsg = document.querySelector(".email_msg");
-
-  // Menu fad animation
+  const cartAddItemDiv = document.querySelector(".cart_added_item");
+  const modal = document.querySelector(".modal");
+  const overlay = document.querySelector(".overlay");
+  const btnCloseModal = document.querySelector(".btn--close-modal");
+  const btnsOpenModal = document.querySelector(".btn--show-modal");
+  const totalAmt = document.getElementById("total");
+  const checkOutBtn = document.querySelector(".check_out");
+  // Menu fade animation
   const handleHover = function (e) {
     if (e.target.classList.contains("nav__link")) {
       const link = e.target;
@@ -151,8 +157,8 @@ window.addEventListener("DOMContentLoaded", () => {
         <!-- price -->
         <span class="cart_price">$${item.price}</span>
         
-        <div>
-          <button class="btn_cart">
+        <div class="btn_addc" data-index=${item.id}>
+          <button class="btn_cart" >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -187,7 +193,143 @@ window.addEventListener("DOMContentLoaded", () => {
       showProduct(index);
     });
   });
-});
 
-let currentIndex = 0;
-let cart = [];
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const saveCart = function () {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+  // Add to cart
+  function addToCart(id) {
+    const product = products.find((item) => item.id === id);
+
+    const checkExistingItem = cart.find((item) => item.id === id);
+
+    if (checkExistingItem) {
+      checkExistingItem.quantity++;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+
+    updateCart();
+  }
+  // add to cart button
+  productDisplay.addEventListener("click", function (e) {
+    const btn = e.target.closest(".btn_addc");
+    if (btn) {
+      const id = parseInt(btn.dataset.index);
+      addToCart(id);
+    }
+  });
+
+  const cartEmpty = document.getElementById("cart_m");
+  // update cart
+  function updateCart() {
+    cartAddItemDiv.innerHTML = cart
+      .map(
+        (item, i) => `
+      <div class="cart_added_item">
+        <div class="added_cart">
+          <img src=${item.image}  class="add_img"/>
+          <div>${item.name}</div>
+          <div class="added_quantity_price">
+          <span>$${item.price * item.quantity}</span>
+          <span>Items: ${item.quantity}</span>
+          </div>
+        </div>
+        <div class="cart_remove_add">
+           <button class="remove_cart_item check_add_remove" data-index="${i}">Remove</button>
+          <div class="increase_quantity check_add_remove" data-index="${i}">+</div>
+        </div>
+      </div>
+  `
+      )
+      .join("");
+
+    const total = cart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    // total
+    if (totalAmt) {
+      totalAmt.textContent = `Total: $${total.toFixed(2)}`;
+    }
+    // conditions
+    if (cart.length > 0) {
+      checkOutBtn.classList.remove("hidden");
+      totalAmt.classList.remove("hidden");
+      cartEmpty.classList.add("hidden");
+      cartEmpty.classList.remove("cart_modal");
+    } else {
+      checkOutBtn.classList.add("hidden");
+      totalAmt.classList.add("hidden");
+      cartEmpty.classList.remove("hidden");
+      cartEmpty.classList.add("cart_modal");
+    }
+    saveCart();
+    addAndRemove();
+  }
+
+  const addAndRemove = function () {
+    document.querySelectorAll(".remove_cart_item").forEach((button) => {
+      button.addEventListener("click", function () {
+        const i = parseInt(this.dataset.index);
+        removeFromCart(i);
+      });
+    });
+
+    document.querySelectorAll(".increase_quantity").forEach((button) => {
+      button.addEventListener("click", function () {
+        const i = parseInt(this.dataset.index);
+        increaseCart(i);
+      });
+    });
+  };
+
+  // remove cart
+  function removeFromCart(i) {
+    if (cart.at(i)) {
+      if (cart.at(i).quantity > 1) {
+        cart.at(i).quantity--;
+      } else {
+        cart.splice(i, 1);
+      }
+    }
+    updateCart();
+  }
+
+  //  add cart
+  function increaseCart(i) {
+    cart.at(i).quantity = (cart.at(i).quantity || 1) + 1;
+    updateCart();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    updateCart();
+  });
+
+  updateCart();
+
+  // cart modal
+  const openModal = function (e) {
+    e.preventDefault();
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+  };
+
+  const closeModal = function () {
+    modal.classList.add("hidden");
+    overlay.classList.add("hidden");
+  };
+
+  btnsOpenModal.addEventListener("click", openModal);
+
+  btnCloseModal.addEventListener("click", closeModal);
+  overlay.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+      closeModal();
+    }
+  });
+});
